@@ -15,20 +15,19 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.PasswordVisualTransformation
-import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.innholandclientt.APIClient.innoholandClient
 import com.example.innholandclientt.ui.theme.InnholandClienttTheme
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,6 +39,9 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
+                    // Declare variables to hold email and password values
+                    var email by remember { mutableStateOf("") }
+                    var password by remember { mutableStateOf("") }
 
                     Column(
                         modifier = Modifier
@@ -51,14 +53,22 @@ class MainActivity : ComponentActivity() {
                         Greeting("Welcome to Newsreader app, please login")
 
                         // StyledEmailField with email value
-                        StyledEmailField()
+                        StyledEmailField(email) { updatedEmail ->
+                            email = updatedEmail
+                        }
 
                         // StyledPasswordField with password value
-                        StyledPasswordField()
+                        StyledPasswordField(password) { updatedPassword ->
+                            password = updatedPassword
+                        }
+
+                        // Debugging Text to display email and password
+                        Text("Email: $email, Password: $password", color = Color.Gray)
+
                         // Smaller Button
                         FilledButtonExample {
                             // Pass email and password to the login function
-                            LoginBtnClicked()
+                            LoginBtnClicked(email, password)
                         }
                     }
                 }
@@ -76,12 +86,10 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun StyledEmailField() {
-    val email by remember {
-        mutableStateOf(TextFieldValue()) }
+fun StyledEmailField(value: String, onValueChange: (String) -> Unit) {
     TextField(
-        value = email.value,
-        onValueChange = { email.value = it },
+        value = value,
+        onValueChange = { onValueChange(it) },
         label = { Text("Email") },
         maxLines = 1,
         textStyle = TextStyle(color = Color.Black),
@@ -93,8 +101,6 @@ fun StyledEmailField() {
 
 @Composable
 fun StyledPasswordField(value: String, onValueChange: (String) -> Unit) {
-    var password by remember {
-        mutableStateOf(TextFieldValue()) }
     TextField(
         value = value,
         onValueChange = { onValueChange(it) },
@@ -108,10 +114,10 @@ fun StyledPasswordField(value: String, onValueChange: (String) -> Unit) {
     )
 }
 
-fun LoginBtnClicked() {
+fun LoginBtnClicked(email: String, password: String) {
     // Use email and password for login logic
     val tmp_InnoholandAPI = innoholandClient()
-    tmp_InnoholandAPI.LoginWith()
+    tmp_InnoholandAPI.LoginWith(email, password)
 }
 
 @Composable

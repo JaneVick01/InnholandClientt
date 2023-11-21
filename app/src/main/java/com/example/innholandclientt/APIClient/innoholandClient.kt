@@ -69,7 +69,7 @@ fun Login() {
 
 }
 
-    fun LoginWith(): Deferred<Boolean> = GlobalScope.async(Dispatchers.IO)
+    fun LoginWith(email: String, password: String): Deferred<Boolean> = GlobalScope.async(Dispatchers.IO)
     {
         // Specify the API endpoint
         val apiUrl = "https://inhollandbackend.azurewebsites.net/api/Users/login"
