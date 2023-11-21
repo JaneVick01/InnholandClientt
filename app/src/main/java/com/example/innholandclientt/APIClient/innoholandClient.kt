@@ -20,12 +20,12 @@ class innoholandClient {
 
     var Auth_Token = ""
 
-fun Login() {
+fun Login(email: String, password: String) {
 
     // Create JSON using JSONObject
     val jsonObject = JSONObject()
-    jsonObject.put("UserName", "TyMojKon")
-    jsonObject.put("Password", "123456")
+    jsonObject.put("UserName", email)
+    jsonObject.put("Password", password)
 
     // Convert JSONObject to String
     val jsonObjectString = jsonObject.toString()
@@ -75,7 +75,7 @@ fun Login() {
         val apiUrl = "https://inhollandbackend.azurewebsites.net/api/Users/login"
 
         // JSON request body
-        val requestBody = """{"UserName": "TyMojKon", "Password": "123456"}"""
+        val requestBody = """{"UserName": "$email", "Password": "$password"}"""
 
         var tmp_Token = ""
         try {
