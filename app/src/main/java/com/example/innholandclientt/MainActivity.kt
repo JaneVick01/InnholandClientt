@@ -175,28 +175,6 @@ fun Navigation(navController: NavHostController) {
     }
 }
 
-@Composable
-fun RegisterBtn(navController: NavController) {
-    val item = NavigationItem.Register
-    Button(
-        onClick = {
-            navController.navigate(item.route) {
-                navController.graph.startDestinationRoute?.let { route ->
-                    popUpTo(route) {
-                        saveState = true
-                    }
-                }
-                launchSingleTop = true
-                restoreState = true
-            }
-        },
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(50.dp)
-    ) {
-        Text("RegisterScreen")
-    }
-}
 
     @Composable
     fun LoginScreen() {
@@ -248,7 +226,8 @@ fun RegisterBtn(navController: NavController) {
 //                            // Handle click on the clickable text
 //                            navController.navigate(NavigationItem.Register.route)
 //                        })
-                    RegisterBtn(navController)
+
+
                 }
 
 //    @Composable
