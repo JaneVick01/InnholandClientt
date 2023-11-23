@@ -152,7 +152,7 @@ fun LoginBtnClicked(email: String, password: String) {
 }
 
 @Composable
-fun FilledButtonExample(onClick: () -> Unit) {
+fun LoginButton(onClick: () -> Unit) {
     Button(
         onClick = { onClick() },
         modifier = Modifier
@@ -161,6 +161,23 @@ fun FilledButtonExample(onClick: () -> Unit) {
     ) {
         Text("Login")
     }
+}
+
+@Composable
+fun RegisterButton(onClick: () -> Unit) {
+    Button(
+        onClick = { onClick() },
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(50.dp)
+    ) {
+        Text("Register")
+    }
+}
+
+fun RegisterBtnClicked(email: String, password: String) {
+    val tmp_InnoholandAPI = innoholandClient()
+    tmp_InnoholandAPI.RegisterWith(email, password)
 }
 
 @Composable
@@ -175,60 +192,6 @@ fun Navigation(navController: NavHostController) {
     }
 }
 
-
-    @Composable
-    fun LoginScreen() {
-        InnholandClienttTheme {
-            val navController = rememberNavController()
-            // A surface container using the 'background' color from the theme
-            Surface(
-                modifier = Modifier.fillMaxSize(),
-                color = MaterialTheme.colorScheme.background
-            ) {
-                // Declare variables to hold email and password values
-                var email by remember { mutableStateOf("") }
-                var password by remember { mutableStateOf("") }
-
-                Column(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(16.dp),
-                    verticalArrangement = Arrangement.Center,
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    Greeting("Welcome to Newsreader app, please login")
-
-                    // StyledEmailField with email value
-                    StyledEmailField(email) { updatedEmail ->
-                        email = updatedEmail
-                    }
-
-                    // StyledPasswordField with password value
-                    StyledPasswordField(password) { updatedPassword ->
-                        password = updatedPassword
-                    }
-
-                    // Debugging Text to display email and password TODO: delete
-                    Text("Email: $email, Password: $password", color = Color.Gray)
-
-                    // Smaller Button
-                    FilledButtonExample {
-                        // Pass email and password to the login function
-                        LoginBtnClicked(email, password)
-                    }
-
-                    // Clickable text to navigate to the registration screen
-//                    Text("Haven't registered yet?")
-//                    Spacer(modifier = Modifier.height(16.dp))
-//                    ClickableText(
-//                        text = AnnotatedString("Click here to Register"),
-//                        onClick = {
-//                            // Handle click on the clickable text
-//                            navController.navigate(NavigationItem.Register.route)
-//                        })
-
-
-                }
 
 //    @Composable
 //    fun TopBar() {
@@ -267,6 +230,3 @@ fun Navigation(navController: NavHostController) {
 //            }
 
 
-            }
-        }
-    }
