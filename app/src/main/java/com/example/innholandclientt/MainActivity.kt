@@ -13,9 +13,11 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.ClickableText
+import androidx.compose.material.AlertDialog
 import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material.Scaffold
+import androidx.compose.material.TextButton
 import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -43,6 +45,8 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import kotlinx.coroutines.Deferred
+import kotlinx.coroutines.runBlocking
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -177,7 +181,15 @@ fun RegisterButton(onClick: () -> Unit) {
 
 fun RegisterBtnClicked(email: String, password: String) {
     val tmp_InnoholandAPI = innoholandClient()
-    tmp_InnoholandAPI.RegisterWith(email, password)
+
+    runBlocking {
+        val result = tmp_InnoholandAPI.RegisterWith(email, password)
+
+        val response = result.await()
+
+        println("Received response: $response")
+    }
+
 }
 
 @Composable
@@ -193,6 +205,29 @@ fun Navigation(navController: NavHostController) {
 }
 
 
+@Composable
+fun ShowMessageBox(message: String) {
+    var showDialog by remember { mutableStateOf(true) }
+
+    // AlertDialog to show the message box
+    if (showDialog) {
+        AlertDialog(
+            onDismissRequest = { showDialog = false },
+            title = { Text("Message Box") },
+            text = { Text(message) },
+            confirmButton = {
+                TextButton(
+                    onClick = {
+                        // Handle the button click (if needed)
+                        showDialog = false
+                    }
+                ) {
+                    Text("OK")
+                }
+            }
+        )
+    }
+
 //    @Composable
 //    fun TopBar() {
 //        TopAppBar(
@@ -202,13 +237,13 @@ fun Navigation(navController: NavHostController) {
 //        )
 //    }
 
-                //    @Preview(showBackground = true)
-                @Composable
-                fun GreetingPreview() {
-                    InnholandClienttTheme {
-                        Greeting("Android")
-                    }
-                }
+    //    @Preview(showBackground = true)
+    @Composable
+    fun GreetingPreview() {
+        InnholandClienttTheme {
+            Greeting("Android")
+        }
+    }
 
 
 //            @Composable
@@ -229,4 +264,4 @@ fun Navigation(navController: NavHostController) {
 //                RegisterScreen()
 //            }
 
-
+}

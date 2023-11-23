@@ -194,7 +194,7 @@ fun Login(email: String, password: String) {
         }
     }
 
-    data class RegistrationResult(val success: Boolean, val message: String)
+    data class RegistrationResult(val success: Boolean = false, val message: String = "")
 
 }
 
