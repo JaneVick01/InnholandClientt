@@ -39,6 +39,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
@@ -53,9 +54,36 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             MainScreen()
+
             }
         }
     }
+
+@Composable
+fun WelcomeSTR() {
+    Text(stringResource(R.string.welcome))
+}
+
+@Composable
+fun RegisterSTR() {
+    Text(stringResource(R.string.register))
+}
+
+@Composable
+fun LoginSTR() {
+    Text(stringResource(R.string.login))
+}
+
+@Composable
+fun PasswordSTR() {
+    Text(stringResource(R.string.password))
+}
+
+@Composable
+fun EmailSTR() {
+    Text(stringResource(R.string.email))
+}
+
 
 @Composable
 fun BottomNavigationBar(navController: NavController) {
@@ -125,7 +153,7 @@ fun StyledEmailField(value: String, onValueChange: (String) -> Unit) {
     TextField(
         value = value,
         onValueChange = { onValueChange(it) },
-        label = { Text("Email") },
+        label = { EmailSTR()},
         maxLines = 1,
         textStyle = TextStyle(color = Color.Black),
         modifier = Modifier
@@ -139,7 +167,7 @@ fun StyledPasswordField(value: String, onValueChange: (String) -> Unit) {
     TextField(
         value = value,
         onValueChange = { onValueChange(it) },
-        label = { Text("Password") },
+        label = {PasswordSTR()},
         maxLines = 1,
         textStyle = TextStyle(color = Color.Black),
         visualTransformation = PasswordVisualTransformation(),
@@ -148,6 +176,8 @@ fun StyledPasswordField(value: String, onValueChange: (String) -> Unit) {
             .padding(vertical = 8.dp)
     )
 }
+
+
 
 fun LoginBtnClicked(email: String, password: String) {
     // Use email and password for login logic
@@ -163,7 +193,7 @@ fun LoginButton(onClick: () -> Unit) {
             .fillMaxWidth()
             .height(50.dp)
     ) {
-        Text("Login")
+    LoginSTR()
     }
 }
 
@@ -175,7 +205,7 @@ fun RegisterButton(onClick: () -> Unit) {
             .fillMaxWidth()
             .height(50.dp)
     ) {
-        Text("Register")
+    RegisterSTR()
     }
 }
 

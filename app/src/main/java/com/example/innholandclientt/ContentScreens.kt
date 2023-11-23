@@ -36,7 +36,8 @@ fun RegisterScreen() {
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Greeting("Welcome to Newsreader app, please register")
+
+                WelcomeSTR()
 
                 // StyledEmailField with email value
                 StyledEmailField(email) { updatedEmail ->
@@ -91,7 +92,8 @@ fun LoginScreen() {
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Greeting("Welcome to Newsreader app, please login")
+
+                WelcomeSTR()
 
                 // StyledEmailField with email value
                 StyledEmailField(email) { updatedEmail ->
